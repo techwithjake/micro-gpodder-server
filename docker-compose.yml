@@ -1,13 +1,15 @@
 services:
   gpodder:
+    image: ghcr.io/techwithjake/micro-gpodder-server:main
     container_name: micro-gpodder-server
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Phoenix
     volumes:
-      - type: bind
-        source: ./data
-        target: /var/www/server/data
+      - /path/to/folder:/var/www/server/data
     hostname: gpodder.localhost
+    networks:
+      - gpodder
     ports:
-      - 8080:8080
+      - "8080:8080"
